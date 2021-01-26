@@ -1,14 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Future Bank</title>
     <link rel="stylesheet" href="style.css">
     <!-- bootstrap cdn -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
+
 <body>
-    <h1 class="text-center">Welcome To Future Bank</h1>
+    <!-- login area starts -->
+    <div id="login-area">
+        <h1 class="text-center">Welcome To Future Bank</h1>
+        <div class="submit-area">
+            <h3>Login</h3>
+            <input type="email" class="form-control" placeholder="Email" name="" id="" required><br>
+            <input type="password" class="form-control" placeholder="Password" required><br>
+            <button id="login" class="btn btn-success">Enter</button>
+        </div>
+    </div>
+    <!-- login area ends -->
+
+    <!-- transaction-status area starts -->
+    <div id="transaction-area">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="status deposit">
+                    <h5>Deposit</h5>
+                    <h1>$<span id="currentDeposit">00</h1>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="status withdraw">
+                    <h5>Withdraw</h5>
+                    <h1>$ <span id="currentWithdraw">00</span></span></h1>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="status balance">
+                    <h5>Balance</h5>
+                    <h1>$<span id="currentBalance">1240</span></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Deposit</h4>
+                    <input id="depositAmount" class="form-control" type="text" placeholder="$ you want to deposit">
+                    <br>
+                    <button id="depositButton" class="btn btn-success">Deposit</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Withdraw</h4>
+                    <input id="withdrawAmount" class="form-control" type="text" placeholder="$ you want to withdraw">
+                    <br>
+                    <button id="withdrawButton" class="btn btn-success">Withdraw</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- transaction-status area ends -->
+    <script>
+        // login area 
+        const loginBtn = document.getElementById('login')
+        loginBtn.addEventListener('click', function () {
+            const loginArea = document.getElementById('login-area')
+            loginArea.style.display = 'none'
+            const transactionArea = document.getElementById('transaction-area')
+            transactionArea.style.display = 'block'
+        })
+
+        // deposit area 
+        const depositBtn = document.getElementById('depositButton')
+        depositBtn.addEventListener('click', function () {
+            const depositNumber = getInputAmount('depositAmount')
+        
+            // aivabew use kora jai but code repeatation hoi r aitak avoid korar jonno function use kora hoyese
+
+            /* const currentDeposit = document.getElementById('currentDeposit').innerText
+            const currentDepositNumber = parseFloat(currentDeposit)
+            const totalDeposit = depositNumber + currentDepositNumber
+            document.getElementById('currentDeposit').innerText = totalDeposit */
+
+            /* const currentBalance = document.getElementById('currentBalance').innerText
+            const currentBalanceNumber = parseFloat(currentBalance)
+            const totalBalance = depositNumber + currentBalanceNumber
+            document.getElementById('currentBalance').innerText = totalBalance */
+
+            addDepositBalance('currentDeposit', depositNumber)
+            addDepositBalance('currentBalance', depositNumber)
+            document.getElementById('depositAmount').value = ''
+        })
+            // withdraw area 
+            const withdrawBtn = document.getElementById('withdrawButton')
+            withdrawBtn.addEventListener('click', function() {
+                const withdrawNumber = getInputAmount('withdrawAmount')
+                addDepositBalance('currentWithdraw', withdrawNumber)
+                addDepositBalance('currentBalance', -1 * withdrawNumber)
+
+                document.getElementById("withdrawAmount").value = ""
+            })
+
+            // common function of deposit & withdraw area 
+            function getInputAmount(id){
+                const amount = document.getElementById(id).value
+                const amountNumber = parseFloat(amount)
+                return amountNumber
+            }
+
+            // common function of deposit and add balance 
+            function addDepositBalance(id, depositNumber) {
+                const current = document.getElementById(id).innerText
+                const currentNumber = parseFloat(current)
+                const totalAmount = depositNumber + currentNumber
+                document.getElementById(id).innerText = totalAmount
+            }
+        
+    </script>
 </body>
+
 </html>
